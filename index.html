@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>2026年 研修資料ポータル</title>
+<title>研修資料ポータル</title>
 
 <style>
 *{
@@ -20,10 +20,8 @@ body{
     color:#000;
 }
 
-/* ===== Window ===== */
-
 .window{
-    max-width:960px;
+    max-width:900px;
     margin:auto;
     background:#c0c0c0;
 
@@ -32,28 +30,26 @@ body{
     border-right:2px solid #404040;
     border-bottom:2px solid #404040;
 
-    box-shadow:4px 4px #202020;
+    box-shadow:4px 4px #404040;
 }
 
 .title-bar{
-    height:28px;
+    background:linear-gradient(to right,#000080,#1084d0);
+    color:#fff;
 
     display:flex;
     justify-content:space-between;
     align-items:center;
 
-    padding:0 6px;
+    padding:5px 8px;
 
-    background:linear-gradient(to right,#000080,#1084d0);
-
-    color:#fff;
     font-size:13px;
     font-weight:bold;
 }
 
 .window-buttons{
     display:flex;
-    gap:3px;
+    gap:4px;
 }
 
 .window-buttons span{
@@ -76,123 +72,83 @@ body{
 }
 
 .window-body{
-    display:grid;
-    grid-template-columns:2fr 1fr;
-    gap:20px;
-    padding:20px;
-}
-
-@media(max-width:768px){
-
-.window-body{
-    grid-template-columns:1fr;
-}
-
-}
-
-/* ===== Main ===== */
-
-.badge{
-    display:inline-block;
-    background:#000080;
-    color:#fff;
-    padding:3px 8px;
-    font-size:12px;
-    margin-bottom:12px;
+    padding:24px;
 }
 
 h1{
-    margin-bottom:15px;
-    font-size:28px;
+    font-size:30px;
+    margin-bottom:10px;
 }
 
 .subtitle{
+    margin-bottom:24px;
     line-height:1.8;
-    margin-bottom:20px;
 }
 
-.meta-row{
-    display:flex;
-    flex-wrap:wrap;
-    gap:8px;
-    margin-bottom:20px;
+.notice{
+    background:#ffffcc;
+    border:1px solid #808080;
+    padding:10px;
+    margin-bottom:24px;
 }
 
-.meta-pill{
-    padding:5px 10px;
+.notice strong{
+    display:block;
+    margin-bottom:5px;
+}
+
+.year-list{
+    display:grid;
+    gap:14px;
+}
+
+.year-card{
+
     background:#dfdfdf;
+
+    padding:16px;
 
     border-top:2px solid #fff;
     border-left:2px solid #fff;
     border-right:2px solid #808080;
     border-bottom:2px solid #808080;
 
+}
+
+.year-title{
+    font-size:20px;
+    font-weight:bold;
+    margin-bottom:6px;
+}
+
+.year-desc{
     font-size:13px;
+    margin-bottom:14px;
 }
 
-.link-card{
-    background:#dfdfdf;
-    padding:18px;
-
-    border-top:2px solid #fff;
-    border-left:2px solid #fff;
-    border-right:2px solid #808080;
-    border-bottom:2px solid #808080;
-}
-
-.link-card-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:15px;
-}
-
-.link-title{
-    font-size:18px;
-    font-weight:bold;
-}
-
-.link-status{
-    color:#008000;
-    font-weight:bold;
-}
-
-.link-desc{
-    line-height:1.8;
-    margin-bottom:18px;
-}
-
-.link-actions{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-}
-
-.btn-primary,
-.btn-secondary{
+.open-button{
 
     display:inline-block;
 
     text-decoration:none;
     color:#000;
 
-    padding:8px 14px;
-
     background:#c0c0c0;
+
+    padding:8px 18px;
 
     border-top:2px solid #fff;
     border-left:2px solid #fff;
     border-right:2px solid #404040;
     border-bottom:2px solid #404040;
+
 }
 
-.btn-primary:hover,
-.btn-secondary:hover{
+.open-button:hover{
     background:#dcdcdc;
 }
 
-.btn-primary:active,
-.btn-secondary:active{
+.open-button:active{
 
     border-top:2px solid #404040;
     border-left:2px solid #404040;
@@ -201,51 +157,33 @@ h1{
 
 }
 
-/* ===== Sidebar ===== */
+.footer{
 
-.side-card{
-    background:#dfdfdf;
-    padding:18px;
+    margin-top:24px;
 
-    border-top:2px solid #fff;
-    border-left:2px solid #fff;
-    border-right:2px solid #808080;
-    border-bottom:2px solid #808080;
-}
+    padding-top:15px;
 
-.side-title{
-    font-weight:bold;
-    margin-bottom:12px;
-    border-bottom:1px solid #808080;
-    padding-bottom:4px;
-}
-
-.side-list{
-    margin-left:18px;
-    line-height:1.8;
-}
-
-.side-list li{
-    margin-bottom:5px;
-}
-
-hr{
-    margin:18px 0;
-    border:none;
     border-top:1px solid #808080;
-}
 
-.tag-area{
-    display:flex;
-    flex-wrap:wrap;
-    gap:6px;
-}
-
-.side-tag{
-    padding:3px 8px;
-    background:#fff;
-    border:1px solid #808080;
     font-size:12px;
+    line-height:1.8;
+
+}
+
+@media(max-width:700px){
+
+body{
+    padding:10px;
+}
+
+.window-body{
+    padding:16px;
+}
+
+h1{
+    font-size:24px;
+}
+
 }
 </style>
 
@@ -257,7 +195,7 @@ hr{
 
     <div class="title-bar">
 
-        <span>📁 2026年 研修資料ポータル</span>
+        <span>📁 研修資料ポータル</span>
 
         <div class="window-buttons">
             <span>─</span>
@@ -269,110 +207,86 @@ hr{
 
     <div class="window-body">
 
-        <section>
+        <h1>2026〜2030年度 研修資料ポータル</h1>
 
-            <div class="badge">
-                TRAINING PORTAL 2026
-            </div>
+        <p class="subtitle">
+            このページは各年度の研修資料一覧への入口です。<br>
+            閲覧したい年度を選択してください。
+        </p>
 
-            <h1>2026年 研修資料ポータル</h1>
+        <div class="notice">
+            <strong>お知らせ</strong>
+            資料は随時更新されます。最新版をご利用ください。
+        </div>
 
-            <p class="subtitle">
-                2026年度の研修資料・動画・参考資料への入口ページです。<br>
-                最新版は下記より閲覧してください。
-            </p>
+        <div class="year-list">
 
-            <div class="meta-row">
-
-                <div class="meta-pill">
-                    年度：2026
+            <div class="year-card">
+                <div class="year-title">📁 2026年度</div>
+                <div class="year-desc">
+                    2026年度研修資料一覧
                 </div>
 
-                <div class="meta-pill">
-                    対象：職員研修
-                </div>
-
-                <div class="meta-pill">
-                    HTMLコンテンツ
-                </div>
-
+                <a href="2026/index.html" class="open-button">
+                    開く ▶
+                </a>
             </div>
 
-            <div class="link-card">
-
-                <div class="link-card-header">
-
-                    <div class="link-title">
-                        📄 2026年度 研修資料
-                    </div>
-
-                    <div class="link-status">
-                        ● 最新版
-                    </div>
-
+            <div class="year-card">
+                <div class="year-title">📁 2027年度</div>
+                <div class="year-desc">
+                    2027年度研修資料一覧
                 </div>
 
-                <div class="link-desc">
-                    研修で使用する教材・スライド・補足資料です。<br>
-                    事前学習・研修後の復習にご利用ください。
+                <a href="2027/index.html" class="open-button">
+                    開く ▶
+                </a>
+            </div>
+
+            <div class="year-card">
+                <div class="year-title">📁 2028年度</div>
+                <div class="year-desc">
+                    2028年度研修資料一覧
                 </div>
 
-                <div class="link-actions">
+                <a href="2028/index.html" class="open-button">
+                    開く ▶
+                </a>
+            </div>
 
-                    <a
-                        href="2026/training.html"
-                        class="btn-primary">
-                        ▶ 研修資料を開く
-                    </a>
-
-                    <a
-                        href="https://github.com/ginmokuseiyakuendai/trainging_materials"
-                        target="_blank"
-                        class="btn-secondary">
-                        GitHubを見る
-                    </a>
-
+            <div class="year-card">
+                <div class="year-title">📁 2029年度</div>
+                <div class="year-desc">
+                    2029年度研修資料一覧
                 </div>
 
+                <a href="2029/index.html" class="open-button">
+                    開く ▶
+                </a>
             </div>
 
-        </section>
+            <div class="year-card">
+                <div class="year-title">📁 2030年度</div>
+                <div class="year-desc">
+                    2030年度研修資料一覧
+                </div>
 
-        <aside class="side-card">
-
-            <div class="side-title">
-                Information
+                <a href="2030/index.html" class="open-button">
+                    開く ▶
+                </a>
             </div>
 
-            <ul class="side-list">
-                <li>資料は随時更新されます。</li>
-                <li>最新版ブラウザでの閲覧を推奨します。</li>
-                <li>不具合はGitHubよりご連絡ください。</li>
-            </ul>
+        </div>
 
-            <hr>
+        <div class="footer">
 
-            <div class="side-title">
-                TAGS
-            </div>
+            <strong>Information</strong><br>
 
-            <div class="tag-area">
+            ・各年度ページから研修資料（HTML）を閲覧できます。<br>
+            ・新しい研修資料は各年度フォルダへ追加してください。<br>
+            ・対応ブラウザ：Microsoft Edge / Google Chrome / Firefox
 
-                <span class="side-tag">
-                    #2026
-                </span>
-
-                <span class="side-tag">
-                    #研修
-                </span>
-
-                <span class="side-tag">
-                    #Training
-                </span>
-
-            </div>
-
-        </aside>
+        </div>
 
     </div>
 
