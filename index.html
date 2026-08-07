@@ -1,353 +1,383 @@
+```html
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <title>2026年 研修資料ポータル</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    :root {
-      --bg: #0f172a;
-      --card-bg: #111827;
-      --accent: #38bdf8;
-      --accent-soft: rgba(56, 189, 248, 0.15);
-      --text-main: #e5e7eb;
-      --text-muted: #9ca3af;
-      --border-subtle: #1f2937;
-      --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.65);
-      --radius-lg: 18px;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026年 研修資料ポータル</title>
 
-    * {
-      box-sizing: border-box;
-    }
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        sans-serif;
-      background: radial-gradient(circle at top left, #1f2937 0, #020617 55%);
-      color: var(--text-main);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 32px 16px;
-    }
+body{
+    background:#008080;
+    font-family:"MS UI Gothic","MS PGothic",Tahoma,sans-serif;
+    padding:30px;
+    color:#000;
+}
 
-    .shell {
-      width: 100%;
-      max-width: 960px;
-      background: linear-gradient(135deg, #020617 0, #0b1120 40%, #020617 100%);
-      border-radius: 24px;
-      border: 1px solid rgba(148, 163, 184, 0.25);
-      box-shadow: var(--shadow-soft);
-      padding: 32px 28px;
-      position: relative;
-      overflow: hidden;
-    }
+/* ===== Window ===== */
 
-    .shell::before {
-      content: "";
-      position: absolute;
-      inset: -120px;
-      background:
-        radial-gradient(circle at 0% 0%, rgba(56, 189, 248, 0.18), transparent 55%),
-        radial-gradient(circle at 100% 100%, rgba(129, 140, 248, 0.18), transparent 55%);
-      opacity: 0.9;
-      pointer-events: none;
-      mix-blend-mode: screen;
-    }
+.window{
+    max-width:960px;
+    margin:auto;
+    background:#c0c0c0;
 
-    .shell-inner {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      grid-template-columns: minmax(0, 2.2fr) minmax(0, 1.6fr);
-      gap: 28px;
-    }
+    border-top:2px solid #fff;
+    border-left:2px solid #fff;
+    border-right:2px solid #404040;
+    border-bottom:2px solid #404040;
 
-    @media (max-width: 768px) {
-      .shell {
-        padding: 24px 20px;
-      }
-      .shell-inner {
-        grid-template-columns: minmax(0, 1fr);
-        gap: 20px;
-      }
-    }
+    box-shadow:4px 4px #202020;
+}
 
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 12px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(148, 163, 184, 0.45);
-      color: var(--text-muted);
-      font-size: 12px;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
+.title-bar{
+    height:28px;
 
-    .badge-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: var(--accent);
-      box-shadow: 0 0 0 6px var(--accent-soft);
-    }
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 
-    h1 {
-      margin: 18px 0 10px;
-      font-size: 28px;
-      letter-spacing: 0.03em;
-    }
+    padding:0 6px;
 
-    .subtitle {
-      margin: 0 0 24px;
-      font-size: 14px;
-      color: var(--text-muted);
-      line-height: 1.7;
-    }
+    background:linear-gradient(to right,#000080,#1084d0);
 
-    .meta-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 24px;
-      font-size: 12px;
-      color: var(--text-muted);
-    }
+    color:#fff;
+    font-size:13px;
+    font-weight:bold;
+}
 
-    .meta-pill {
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      background: rgba(15, 23, 42, 0.85);
-    }
+.window-buttons{
+    display:flex;
+    gap:3px;
+}
 
-    .link-card {
-      border-radius: var(--radius-lg);
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid var(--border-subtle);
-      padding: 16px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      position: relative;
-      overflow: hidden;
-    }
+.window-buttons span{
+    width:18px;
+    height:18px;
 
-    .link-card::before {
-      content: "";
-      position: absolute;
-      inset: -40%;
-      background: radial-gradient(circle at 0 0, var(--accent-soft), transparent 55%);
-      opacity: 0.7;
-      pointer-events: none;
-    }
+    display:flex;
+    justify-content:center;
+    align-items:center;
 
-    .link-card-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-    }
+    background:#c0c0c0;
+    color:#000;
 
-    .link-title {
-      font-size: 15px;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
+    border-top:2px solid #fff;
+    border-left:2px solid #fff;
+    border-right:2px solid #404040;
+    border-bottom:2px solid #404040;
 
-    .link-status {
-      font-size: 11px;
-      color: var(--accent);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
+    font-size:11px;
+}
 
-    .link-status-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      border: 1px solid var(--accent);
-    }
+.window-body{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:20px;
+    padding:20px;
+}
 
-    .link-desc {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
+@media(max-width:768px){
 
-    .link-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 4px;
-    }
+.window-body{
+    grid-template-columns:1fr;
+}
 
-    .btn-primary {
-      position: relative;
-      z-index: 1;
-      padding: 9px 16px;
-      border-radius: 999px;
-      border: none;
-      background: linear-gradient(135deg, #38bdf8, #22c55e);
-      color: #0b1120;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.7);
-      text-decoration: none;
-    }
+}
 
-    .btn-primary span.icon {
-      font-size: 14px;
-    }
+/* ===== Main ===== */
 
-    .btn-secondary {
-      position: relative;
-      z-index: 1;
-      padding: 8px 14px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      background: rgba(15, 23, 42, 0.9);
-      color: var(--text-muted);
-      font-size: 12px;
-      cursor: pointer;
-      text-decoration: none;
-    }
+.badge{
+    display:inline-block;
+    background:#000080;
+    color:#fff;
+    padding:3px 8px;
+    font-size:12px;
+    margin-bottom:12px;
+}
 
-    .side-card {
-      border-radius: var(--radius-lg);
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      padding: 16px 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
+h1{
+    margin-bottom:15px;
+    font-size:28px;
+}
 
-    .side-title {
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
+.subtitle{
+    line-height:1.8;
+    margin-bottom:20px;
+}
 
-    .side-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      font-size: 13px;
-      color: var(--text-muted);
-    }
+.meta-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:20px;
+}
 
-    .side-list li + li {
-      margin-top: 6px;
-    }
+.meta-pill{
+    padding:5px 10px;
+    background:#dfdfdf;
 
-    .side-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 9px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      font-size: 11px;
-      color: var(--text-muted);
-    }
+    border-top:2px solid #fff;
+    border-left:2px solid #fff;
+    border-right:2px solid #808080;
+    border-bottom:2px solid #808080;
 
-    .side-footer {
-      font-size: 11px;
-      color: var(--text-muted);
-      border-top: 1px solid rgba(31, 41, 55, 0.9);
-      padding-top: 10px;
-      margin-top: 4px;
-    }
-  </style>
+    font-size:13px;
+}
+
+.link-card{
+    background:#dfdfdf;
+    padding:18px;
+
+    border-top:2px solid #fff;
+    border-left:2px solid #fff;
+    border-right:2px solid #808080;
+    border-bottom:2px solid #808080;
+}
+
+.link-card-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+}
+
+.link-title{
+    font-size:18px;
+    font-weight:bold;
+}
+
+.link-status{
+    color:#008000;
+    font-weight:bold;
+}
+
+.link-desc{
+    line-height:1.8;
+    margin-bottom:18px;
+}
+
+.link-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.btn-primary,
+.btn-secondary{
+
+    display:inline-block;
+
+    text-decoration:none;
+    color:#000;
+
+    padding:8px 14px;
+
+    background:#c0c0c0;
+
+    border-top:2px solid #fff;
+    border-left:2px solid #fff;
+    border-right:2px solid #404040;
+    border-bottom:2px solid #404040;
+}
+
+.btn-primary:hover,
+.btn-secondary:hover{
+    background:#dcdcdc;
+}
+
+.btn-primary:active,
+.btn-secondary:active{
+
+    border-top:2px solid #404040;
+    border-left:2px solid #404040;
+    border-right:2px solid #fff;
+    border-bottom:2px solid #fff;
+
+}
+
+/* ===== Sidebar ===== */
+
+.side-card{
+    background:#dfdfdf;
+    padding:18px;
+
+    border-top:2px solid #fff;
+    border-left:2px solid #fff;
+    border-right:2px solid #808080;
+    border-bottom:2px solid #808080;
+}
+
+.side-title{
+    font-weight:bold;
+    margin-bottom:12px;
+    border-bottom:1px solid #808080;
+    padding-bottom:4px;
+}
+
+.side-list{
+    margin-left:18px;
+    line-height:1.8;
+}
+
+.side-list li{
+    margin-bottom:5px;
+}
+
+hr{
+    margin:18px 0;
+    border:none;
+    border-top:1px solid #808080;
+}
+
+.tag-area{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+}
+
+.side-tag{
+    padding:3px 8px;
+    background:#fff;
+    border:1px solid #808080;
+    font-size:12px;
+}
+</style>
+
 </head>
+
 <body>
-  <main class="shell">
-    <div class="shell-inner">
-      <!-- 左側：メインコンテンツ -->
-      <section>
-        <div class="badge">
-          <span class="badge-dot"></span>
-          <span>2026 Training Materials</span>
+
+<div class="window">
+
+    <div class="title-bar">
+
+        <span>📁 2026年 研修資料ポータル</span>
+
+        <div class="window-buttons">
+            <span>─</span>
+            <span>□</span>
+            <span>×</span>
         </div>
 
-        <h1>2026年 研修資料ポータル</h1>
-        <p class="subtitle">
-          2026年度の研修に関する資料・コンテンツへの入口ページです。<br />
-          最新版の研修資料は、以下のリンクから閲覧できます。
-        </p>
-
-        <div class="meta-row">
-          <span class="meta-pill">年度: 2026</span>
-          <span class="meta-pill">対象: 職員研修</span>
-          <span class="meta-pill">形式: Webコンテンツ / HTML</span>
-        </div>
-
-        <article class="link-card">
-          <header class="link-card-header">
-            <div class="link-title">2026年 研修資料</div>
-            <div class="link-status">
-              <span class="link-status-dot"></span>
-              <span>最新版</span>
-            </div>
-          </header>
-
-          <p class="link-desc">
-            2026年度の研修で使用する資料一式です。<br />
-            事前学習・当日の振り返りにご利用ください。
-          </p>
-
-          <div class="link-actions">
-            <!-- ★ここを実際のHTMLファイルのパスに変更してください -->
-            <a href="2026/training.html" class="btn-primary">
-              <span class="icon">↗</span>
-              <span>研修資料を開く</span>
-            </a>
-
-            <a href="https://github.com/ginmokuseiyakuendai/trainging_materials"
-               class="btn-secondary" target="_blank" rel="noopener">
-              GitHub リポジトリを表示
-            </a>
-          </div>
-        </article>
-      </section>
-
-      <!-- 右側：補足情報 -->
-      <aside class="side-card">
-        <div class="side-title">Information</div>
-
-        <ul class="side-list">
-          <li>・資料は随時更新される場合があります。</li>
-          <li>・ブラウザの最新版での閲覧を推奨します。</li>
-        </ul>
-
-        <div class="side-footer">
-          <div style="margin-bottom: 6px;">タグ:</div>
-          <div style="display: flex; flex-wrap: wrap; gap: 6px;">
-            <span class="side-tag">#2026</span>
-            <span class="side-tag">#研修</span>
-            <span class="side-tag">#Training</span>
-          </div>
-        </div>
-      </aside>
     </div>
-  </main>
+
+    <div class="window-body">
+
+        <section>
+
+            <div class="badge">
+                TRAINING PORTAL 2026
+            </div>
+
+            <h1>2026年 研修資料ポータル</h1>
+
+            <p class="subtitle">
+                2026年度の研修資料・動画・参考資料への入口ページです。<br>
+                最新版は下記より閲覧してください。
+            </p>
+
+            <div class="meta-row">
+
+                <div class="meta-pill">
+                    年度：2026
+                </div>
+
+                <div class="meta-pill">
+                    対象：職員研修
+                </div>
+
+                <div class="meta-pill">
+                    HTMLコンテンツ
+                </div>
+
+            </div>
+
+            <div class="link-card">
+
+                <div class="link-card-header">
+
+                    <div class="link-title">
+                        📄 2026年度 研修資料
+                    </div>
+
+                    <div class="link-status">
+                        ● 最新版
+                    </div>
+
+                </div>
+
+                <div class="link-desc">
+                    研修で使用する教材・スライド・補足資料です。<br>
+                    事前学習・研修後の復習にご利用ください。
+                </div>
+
+                <div class="link-actions">
+
+                    <a
+                        href="2026/training.html"
+                        class="btn-primary">
+                        ▶ 研修資料を開く
+                    </a>
+
+                    <a
+                        href="https://github.com/ginmokuseiyakuendai/trainging_materials"
+                        target="_blank"
+                        class="btn-secondary">
+                        GitHubを見る
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <aside class="side-card">
+
+            <div class="side-title">
+                Information
+            </div>
+
+            <ul class="side-list">
+                <li>資料は随時更新されます。</li>
+                <li>最新版ブラウザでの閲覧を推奨します。</li>
+                <li>不具合はGitHubよりご連絡ください。</li>
+            </ul>
+
+            <hr>
+
+            <div class="side-title">
+                TAGS
+            </div>
+
+            <div class="tag-area">
+
+                <span class="side-tag">
+                    #2026
+                </span>
+
+                <span class="side-tag">
+                    #研修
+                </span>
+
+                <span class="side-tag">
+                    #Training
+                </span>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+</div>
+
 </body>
 </html>
+```
