@@ -1,0 +1,815 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>虐待防止・身体拘束廃止</title>
+<style>
+:root{
+  --ink:#172033;
+  --muted:#5b6474;
+  --line:#d8dee8;
+  --paper:#ffffff;
+  --bg:#f3f6fa;
+  --navy:#18345b;
+  --blue:#2563a7;
+  --teal:#087f78;
+  --amber:#b96800;
+  --red:#b42318;
+  --green:#1f7a45;
+  --soft-blue:#eaf2fb;
+  --soft-teal:#e8f5f3;
+  --soft-amber:#fff5e6;
+  --soft-red:#fff0ef;
+  --shadow:0 12px 30px rgba(23,32,51,.08);
+  --radius:16px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  color:var(--ink);
+  background:var(--bg);
+  font-family:"Yu Gothic UI","Yu Gothic","Hiragino Kaku Gothic ProN","Meiryo",sans-serif;
+  line-height:1.75;
+  letter-spacing:.01em;
+}
+button,input{font:inherit}
+button{cursor:pointer}
+a{color:var(--blue);text-underline-offset:3px}
+.skip{
+  position:absolute;left:-9999px;top:auto;
+}
+.skip:focus{
+  left:16px;top:16px;z-index:1000;background:#fff;padding:10px 14px;border:2px solid var(--blue)
+}
+.hero{
+  background:linear-gradient(120deg,#102847,#1c4d76);
+  color:#fff;
+  padding:52px 24px 42px;
+}
+.hero-inner{max-width:1100px;margin:auto}
+.eyebrow{
+  display:inline-block;
+  font-weight:700;
+  font-size:.88rem;
+  letter-spacing:.12em;
+  border:1px solid rgba(255,255,255,.35);
+  border-radius:999px;
+  padding:5px 12px;
+}
+h1{
+  margin:18px 0 12px;
+  font-size:clamp(2rem,5vw,4.2rem);
+  line-height:1.18;
+  letter-spacing:.03em;
+}
+.hero p{max-width:780px;font-size:1.08rem;color:#e7eef7}
+.hero-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:28px;max-width:860px
+}
+.hero-chip{
+  background:rgba(255,255,255,.09);
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:12px;
+  padding:14px 16px;
+}
+.hero-chip strong{display:block;font-size:1.25rem}
+.toolbar{
+  position:sticky;top:0;z-index:20;
+  background:rgba(255,255,255,.94);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.toolbar-inner{
+  max-width:1100px;margin:auto;padding:10px 20px;
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap
+}
+.progress-shell{
+  flex:1;min-width:220px;height:9px;background:#e5e9f0;border-radius:999px;overflow:hidden
+}
+.progress-bar{height:100%;width:0;background:var(--teal);transition:width .25s}
+.progress-label{font-weight:700;font-size:.9rem;min-width:92px}
+.ghost{
+  border:1px solid var(--line);background:#fff;color:var(--ink);
+  border-radius:10px;padding:8px 12px;font-weight:700
+}
+.ghost:hover{border-color:var(--blue)}
+.layout{
+  max-width:1100px;margin:28px auto 70px;padding:0 20px;
+  display:grid;grid-template-columns:240px minmax(0,1fr);gap:24px;align-items:start
+}
+nav{
+  position:sticky;top:76px;background:var(--paper);border:1px solid var(--line);
+  border-radius:var(--radius);padding:14px;box-shadow:var(--shadow)
+}
+nav a{
+  display:block;color:var(--ink);text-decoration:none;padding:10px 11px;
+  border-radius:9px;font-weight:700;font-size:.93rem
+}
+nav a:hover,nav a.active{background:var(--soft-blue);color:var(--navy)}
+.nav-note{
+  border-top:1px solid var(--line);margin-top:10px;padding:12px 10px 4px;
+  color:var(--muted);font-size:.84rem
+}
+main{min-width:0}
+.lesson{
+  background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:clamp(22px,4vw,42px);margin-bottom:24px
+}
+.section-tag{
+  color:var(--teal);font-weight:800;letter-spacing:.08em;font-size:.83rem
+}
+h2{
+  margin:4px 0 18px;font-size:clamp(1.55rem,3vw,2.35rem);line-height:1.35;color:var(--navy)
+}
+h3{font-size:1.22rem;line-height:1.45;margin:26px 0 10px;color:var(--navy)}
+p{margin:10px 0}
+.lead{font-size:1.08rem}
+.callout{
+  border-left:5px solid var(--blue);background:var(--soft-blue);
+  border-radius:0 12px 12px 0;padding:16px 18px;margin:18px 0
+}
+.callout.warning{border-color:var(--amber);background:var(--soft-amber)}
+.callout.danger{border-color:var(--red);background:var(--soft-red)}
+.callout.success{border-color:var(--green);background:#edf8f1}
+.clean-list{padding-left:1.25rem}
+.clean-list li{margin:7px 0}
+.goal-grid,.type-grid,.three-grid,.alt-grid{
+  display:grid;gap:14px
+}
+.goal-grid{grid-template-columns:repeat(3,1fr)}
+.goal-card,.type-card,.mini-card{
+  border:1px solid var(--line);border-radius:14px;padding:18px;background:#fff
+}
+.goal-card strong,.type-card strong,.mini-card strong{display:block;color:var(--navy);margin-bottom:5px}
+.type-grid{grid-template-columns:repeat(2,1fr)}
+.type-card:last-child{grid-column:1/-1}
+.type-card .label{
+  display:inline-block;font-size:.78rem;font-weight:800;color:#fff;background:var(--navy);
+  padding:3px 9px;border-radius:999px;margin-bottom:9px
+}
+.flow{
+  display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:stretch;gap:10px;margin:22px 0
+}
+.flow-step{
+  border:1px solid var(--line);border-radius:14px;padding:18px;background:#fff
+}
+.flow-step b{display:block;color:var(--navy);margin-bottom:4px}
+.arrow{align-self:center;font-size:1.6rem;color:var(--teal);font-weight:800}
+.branch{
+  display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px
+}
+.branch article{border:1px solid var(--line);border-radius:14px;padding:18px}
+.branch h3{margin-top:0}
+.three-grid{grid-template-columns:repeat(3,1fr);margin:18px 0}
+.lock{
+  border-top:5px solid var(--blue);background:var(--soft-blue);
+  border-radius:14px;padding:18px
+}
+.lock:nth-child(2){border-color:var(--teal);background:var(--soft-teal)}
+.lock:nth-child(3){border-color:var(--amber);background:var(--soft-amber)}
+.requirements{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0
+}
+.req{
+  border:2px solid var(--teal);border-radius:14px;padding:18px;background:#fff
+}
+.req .num{
+  width:32px;height:32px;display:grid;place-items:center;border-radius:50%;
+  background:var(--teal);color:#fff;font-weight:800;margin-bottom:10px
+}
+.alt-grid{grid-template-columns:repeat(2,1fr)}
+.alt{
+  border:1px solid var(--line);border-radius:14px;padding:16px;background:#fff
+}
+.alt b{color:var(--navy)}
+details{
+  border:1px solid var(--line);border-radius:12px;padding:0 16px;background:#fff;margin:12px 0
+}
+summary{cursor:pointer;font-weight:800;color:var(--navy);padding:14px 0}
+details[open]{padding-bottom:14px}
+.case{
+  border:1px solid var(--line);border-radius:15px;padding:20px;margin:16px 0;background:#fff
+}
+.case h3{margin-top:0}
+.case-options label,.quiz-options label{
+  display:block;border:1px solid var(--line);border-radius:10px;padding:11px 12px;margin:8px 0;
+  cursor:pointer
+}
+.case-options label:hover,.quiz-options label:hover{background:var(--soft-blue)}
+.case-result,.quiz-feedback{display:none;margin-top:12px;padding:13px;border-radius:10px}
+.case-result.show,.quiz-feedback.show{display:block}
+.case-result.ok,.quiz-feedback.ok{background:#edf8f1;border:1px solid #b6dec5}
+.case-result.ng,.quiz-feedback.ng{background:var(--soft-red);border:1px solid #efb7b2}
+.primary{
+  border:0;background:var(--navy);color:#fff;border-radius:10px;padding:10px 16px;font-weight:800
+}
+.primary:hover{background:#244d7f}
+.secondary{
+  border:1px solid var(--navy);background:#fff;color:var(--navy);
+  border-radius:10px;padding:9px 15px;font-weight:800
+}
+.mastery{
+  border-top:1px solid var(--line);margin-top:26px;padding-top:18px;
+  display:flex;gap:12px;align-items:flex-start
+}
+.mastery input{width:22px;height:22px;margin-top:2px;accent-color:var(--teal)}
+.mastery label{font-weight:800}
+.quiz-item{
+  border-top:1px solid var(--line);padding:20px 0
+}
+.quiz-item:first-of-type{border-top:0}
+.quiz-item fieldset{border:0;padding:0;margin:0}
+.quiz-item legend{font-weight:800;margin-bottom:10px}
+.score-panel{
+  display:none;border-radius:14px;padding:20px;margin-top:18px
+}
+.score-panel.show{display:block}
+.score-panel.pass{background:#edf8f1;border:2px solid #7bb993}
+.score-panel.fail{background:var(--soft-amber);border:2px solid #e5b96f}
+.sources li{margin:11px 0}
+.small{font-size:.88rem;color:var(--muted)}
+.legal-date{font-size:.85rem;color:#dce8f6;margin-top:14px}
+.noscript{background:#fff0ef;padding:14px;border:1px solid #e8aaa5;margin:15px}
+@media(max-width:860px){
+  .layout{grid-template-columns:1fr}
+  nav{position:static}
+  nav .nav-links{display:grid;grid-template-columns:repeat(2,1fr)}
+  .hero-grid,.goal-grid,.three-grid,.requirements{grid-template-columns:1fr}
+  .type-grid,.alt-grid,.branch{grid-template-columns:1fr}
+  .type-card:last-child{grid-column:auto}
+  .flow{grid-template-columns:1fr}
+  .arrow{transform:rotate(90deg);justify-self:center}
+}
+@media(max-width:560px){
+  nav .nav-links{grid-template-columns:1fr}
+  .lesson{padding:22px 18px}
+}
+@media print{
+  body{background:#fff;font-size:11pt}
+  .hero{padding:24px;color:#000;background:#fff;border-bottom:3px solid #18345b}
+  .hero p,.legal-date{color:#333}
+  .eyebrow{border-color:#666}
+  .toolbar,nav,.mastery,.case button,#quizSubmit,#quizRetry{display:none!important}
+  .layout{display:block;max-width:none;margin:0;padding:0}
+  .lesson{box-shadow:none;border:0;border-bottom:1px solid #aaa;border-radius:0;margin:0;padding:20px 10mm;break-inside:avoid}
+  a{color:#000;text-decoration:none}
+  .case-result,.quiz-feedback,.score-panel{display:block!important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#content">本文へ移動</a>
+
+<header class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow">30分研修</span>
+    <h1>虐待防止・身体拘束廃止</h1>
+    <p>「虐待かもしれない」「安全のために動きを止めたい」と感じた場面で、法令に沿って判断し、必要な報告と代替策を実行するための研修です。</p>
+    <div class="hero-grid">
+      <div class="hero-chip"><strong>5分類</strong><span>虐待を見分ける</span></div>
+      <div class="hero-chip"><strong>3要件</strong><span>例外判断を誤らない</span></div>
+      <div class="hero-chip"><strong>1つの原則</strong><span>疑いの段階で相談・通報する</span></div>
+    </div>
+    <div class="legal-date">法令・通知の確認日：2026年8月4日</div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="toolbar-inner">
+    <span class="progress-label" id="progressLabel">進捗 0%</span>
+    <div class="progress-shell" aria-label="研修進捗"><div class="progress-bar" id="progressBar"></div></div>
+    <button class="ghost" type="button" onclick="window.print()">印刷</button>
+    <button class="ghost" type="button" id="resetBtn">記録をリセット</button>
+  </div>
+</div>
+
+<noscript><div class="noscript">理解チェックと採点にはJavaScriptが必要です。本文と印刷は利用できます。</div></noscript>
+
+<div class="layout">
+  <nav aria-label="研修目次">
+    <div class="nav-links">
+      <a href="#s0">研修の到達点</a>
+      <a href="#s1">1. 虐待を見分ける</a>
+      <a href="#s2">2. 発見時の対応</a>
+      <a href="#s3">3. 身体拘束を判断する</a>
+      <a href="#s4">4. 拘束しない支援</a>
+      <a href="#s5">5. 事例で判断する</a>
+      <a href="#s6">6. 理解度確認</a>
+      <a href="#sources">根拠資料</a>
+    </div>
+    <div class="nav-note">各章の末尾で、要点を自分の言葉で説明できるか確認します。</div>
+  </nav>
+
+  <main id="content">
+    <section class="lesson" id="s0">
+      <div class="section-tag">START</div>
+      <h2>研修の到達点</h2>
+      <p class="lead">研修後は、次の3点を実行できる状態を目指します。</p>
+      <div class="goal-grid">
+        <article class="goal-card">
+          <strong>見分ける</strong>
+          <span>虐待の5分類と、身体拘束に該当する行為を説明する。</span>
+        </article>
+        <article class="goal-card">
+          <strong>止める・守る</strong>
+          <span>危険を確認し、事実を記録し、必要な相談・通報を行う。</span>
+        </article>
+        <article class="goal-card">
+          <strong>置き換える</strong>
+          <span>行動の原因を探り、拘束ではない支援方法を選ぶ。</span>
+        </article>
+      </div>
+      <div class="callout warning">
+        <strong>最初に確認する原則</strong>
+        <p>虐待かどうかを職員が確定する必要はありません。法律は「虐待を受けたと思われる」段階での通報を定めています。</p>
+      </div>
+      <div class="mastery">
+        <input class="masteryCheck" type="checkbox" id="m0">
+        <label for="m0">この研修で身につける3点を説明できる。</label>
+      </div>
+    </section>
+
+    <section class="lesson" id="s1">
+      <div class="section-tag">SECTION 1</div>
+      <h2>虐待を5つに分けて見分ける</h2>
+      <p>高齢者虐待防止法は、虐待を5つに分類します。行為者に悪意があるかではなく、行為と結果から判断します。</p>
+
+      <div class="type-grid">
+        <article class="type-card">
+          <span class="label">1</span>
+          <strong>身体的虐待</strong>
+          <p>外傷が生じる、または生じるおそれのある暴力を加える行為です。</p>
+          <p class="small">例：たたく、つねる、無理に食べさせる、必要性のない身体の抑制。</p>
+        </article>
+        <article class="type-card">
+          <span class="label">2</span>
+          <strong>介護・世話の放棄・放任</strong>
+          <p>必要な介護や生活支援を著しく怠り、心身の状態を悪化させる行為です。</p>
+          <p class="small">例：水分や食事を与えない、長時間放置する、必要な医療・介護を理由なく制限する。</p>
+        </article>
+        <article class="type-card">
+          <span class="label">3</span>
+          <strong>心理的虐待</strong>
+          <p>著しい暴言、拒絶的な対応、無視などにより、強い心理的苦痛を与える行為です。</p>
+          <p class="small">例：怒鳴る、排泄の失敗を人前で話す、幼児のように扱う、意図的に無視する。</p>
+        </article>
+        <article class="type-card">
+          <span class="label">4</span>
+          <strong>性的虐待</strong>
+          <p>本人との合意がない性的な行為、または性的な行為をさせることです。</p>
+          <p class="small">例：懲罰として裸にする、不要な露出を続ける、性的接触を強要する。</p>
+        </article>
+        <article class="type-card">
+          <span class="label">5</span>
+          <strong>経済的虐待</strong>
+          <p>財産を不当に処分する、または不当に財産上の利益を得る行為です。</p>
+          <p class="small">例：本人の意思に反して預貯金を使う、生活に必要な金銭を理由なく渡さない。</p>
+        </article>
+      </div>
+
+      <details>
+        <summary>「不適切なケア」と虐待の関係</summary>
+        <p>すべての不適切な言動が直ちに法律上の虐待と確定するわけではありません。ただし、乱暴な言葉、無視、本人の意思を確認しない介助、安易な行動制限は、虐待につながる兆候です。小さい段階で相談し、方法を修正します。</p>
+      </details>
+
+      <div class="callout">
+        <strong>訪問時に見る事実</strong>
+        <p>説明のつかない傷、極端な脱水や低栄養、不衛生な環境、怯え、金銭管理の急な変化、家族や職員の威圧的な言動を、推測と分けて記録します。</p>
+      </div>
+
+      <div class="mastery">
+        <input class="masteryCheck" type="checkbox" id="m1">
+        <label for="m1">5分類を、各1例とともに説明できる。</label>
+      </div>
+    </section>
+
+    <section class="lesson" id="s2">
+      <div class="section-tag">SECTION 2</div>
+      <h2>疑いを発見したら、安全確認・記録・通報を進める</h2>
+      <p>対応の目的は、犯人探しではなく、本人の安全確保と再発防止です。内部確認が終わるまで待つと、必要な保護が遅れることがあります。</p>
+
+      <div class="flow" aria-label="発見時の対応手順">
+        <div class="flow-step">
+          <b>1. 安全を確認</b>
+          <span>生命・身体の危険、受診や救急要請の必要性を確認する。</span>
+        </div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="flow-step">
+          <b>2. 事実を記録</b>
+          <span>日時、場所、本人の言葉、観察した状態、行った対応を客観的に残す。</span>
+        </div>
+        <div class="arrow" aria-hidden="true">→</div>
+        <div class="flow-step">
+          <b>3. 相談・通報</b>
+          <span>職場内の報告と、市町村への通報を必要に応じて並行して行う。</span>
+        </div>
+      </div>
+
+      <div class="branch">
+        <article>
+          <h3>職員等による虐待を疑う場合</h3>
+          <p>業務に従事する者が発見したときは、市町村への速やかな通報が義務です。上司の了承や、虐待の確定を待つ規定ではありません。</p>
+          <p class="small">通報者を特定する情報は保護され、通報を理由とする解雇その他の不利益な取扱いは禁止されています。</p>
+        </article>
+        <article>
+          <h3>家族等による虐待を疑う場合</h3>
+          <p>生命または身体に重大な危険がある場合は、市町村への速やかな通報が義務です。それ以外でも、速やかに通報するよう努めます。</p>
+          <p class="small">養護者の支援も制度の目的です。家族を責めるのではなく、負担軽減と本人保護を同時に進めます。</p>
+        </article>
+      </div>
+
+      <div class="callout danger">
+        <strong>緊急時</strong>
+        <p>今まさに暴力が続いている、重い外傷がある、生命の危険がある場合は、本人の安全を優先し、119番・110番を含む緊急対応を行います。</p>
+      </div>
+
+      <h3>記録は「見たこと」と「考えたこと」を分ける</h3>
+      <div class="branch">
+        <article>
+          <strong>事実</strong>
+          <p>「左前腕に約4 cmの紫色の皮下出血」「本人が『昨日たたかれた』と発言」</p>
+        </article>
+        <article>
+          <strong>推測</strong>
+          <p>「家族が虐待したと思う」</p>
+        </article>
+      </div>
+      <p class="small">推測を書いてはいけないという意味ではありません。事実と推測を区別し、判断根拠を明確にします。</p>
+
+      <div class="mastery">
+        <input class="masteryCheck" type="checkbox" id="m2">
+        <label for="m2">職員による虐待と家族による虐待について、通報義務の違いを説明できる。</label>
+      </div>
+    </section>
+
+    <section class="lesson" id="s3">
+      <div class="section-tag">SECTION 3</div>
+      <h2>身体拘束は、道具だけでなく行動を制限する行為で判断する</h2>
+      <p>訪問介護では、利用者または他者の生命・身体を守るための緊急やむを得ない場合を除き、身体的拘束その他の行動制限を行ってはなりません。</p>
+
+      <div class="three-grid">
+        <article class="lock">
+          <strong>物理的な拘束</strong>
+          <p>ひも、ベルト、柵、固定テーブル、鍵のかかる部屋などで動きを制限する。</p>
+        </article>
+        <article class="lock">
+          <strong>薬による拘束</strong>
+          <p>行動を抑える目的で、向精神薬等を過剰に使用する。</p>
+        </article>
+        <article class="lock">
+          <strong>言葉による拘束</strong>
+          <p>威圧的な言葉や命令で、その場から動けないようにする。</p>
+        </article>
+      </div>
+
+      <details>
+        <summary>典型例を確認する</summary>
+        <ul class="clean-list">
+          <li>車椅子や椅子、ベッドに体幹や四肢をひも等で固定する。</li>
+          <li>自分で降りられないよう、ベッドを柵で囲む。</li>
+          <li>車椅子から立ち上がれないよう、固定テーブルや抑制帯を使用する。</li>
+          <li>ミトン型手袋やつなぎ服で、チューブ抜去や脱衣を防ぐ。</li>
+          <li>本人が開けられない居室等に隔離する。</li>
+          <li>行動を抑えるため、向精神薬を過剰に使用する。</li>
+          <li>「そこに座っていなさい」と威圧し、移動を事実上制限する。</li>
+        </ul>
+      </details>
+
+      <h3>例外には、3要件をすべて満たす必要がある</h3>
+      <div class="requirements">
+        <article class="req">
+          <div class="num">1</div>
+          <strong>切迫性</strong>
+          <p>生命または身体が危険にさらされる可能性が著しく高い。</p>
+        </article>
+        <article class="req">
+          <div class="num">2</div>
+          <strong>非代替性</strong>
+          <p>身体拘束以外に代替する方法がない。</p>
+        </article>
+        <article class="req">
+          <div class="num">3</div>
+          <strong>一時性</strong>
+          <p>拘束または行動制限が一時的である。</p>
+        </article>
+      </div>
+
+      <div class="callout warning">
+        <strong>3要件を満たす理由にならないもの</strong>
+        <p>家族が希望した、職員が少ない、転倒が心配、介助しやすい、以前から行っているという理由だけでは認められません。</p>
+      </div>
+
+      <h3>実施した場合の記録</h3>
+      <p>態様と時間、本人の心身の状況、緊急やむを得ない理由を記録します。切迫性・非代替性・一時性を組織として慎重に確認した内容も残し、訪問介護では記録を2年間保存します。</p>
+
+      <div class="mastery">
+        <input class="masteryCheck" type="checkbox" id="m3">
+        <label for="m3">身体拘束の3要件と、必要な記録を説明できる。</label>
+      </div>
+    </section>
+
+    <section class="lesson" id="s4">
+      <div class="section-tag">SECTION 4</div>
+      <h2>行動を止める前に、行動が生じる原因を探る</h2>
+      <p>「立ち上がる」「帰ろうとする」「介助を拒む」などの行動には、本人なりの理由があります。原因に働きかけると、拘束を使わずに危険を減らせます。</p>
+
+      <div class="alt-grid">
+        <article class="alt"><b>身体的不快</b><br>痛み、便意、尿意、空腹、口渇、疲労、暑さ・寒さを確認する。</article>
+        <article class="alt"><b>薬剤・疾患</b><br>薬の変更、眠気、せん妄、感染症、低血糖などの可能性を共有する。</article>
+        <article class="alt"><b>環境</b><br>床の障害物、照明、手すり、ベッド高、履物、移動経路を調整する。</article>
+        <article class="alt"><b>伝え方</b><br>一度に多くを求めず、短く説明し、選択肢と待つ時間を設ける。</article>
+        <article class="alt"><b>生活のリズム</b><br>本人の習慣、起床・排泄・食事・活動の時間を支援に反映する。</article>
+        <article class="alt"><b>支援体制</b><br>一人で抱えず、サービス提供責任者、家族、ケアマネジャー、医療職と方法を統一する。</article>
+      </div>
+
+      <h3>現場での短い手順</h3>
+      <div class="flow">
+        <div class="flow-step"><b>止まる</b><span>力で押さえる前に、差し迫った危険を確認する。</span></div>
+        <div class="arrow">→</div>
+        <div class="flow-step"><b>理由を探る</b><span>本人の言葉、表情、身体状況、環境を確認する。</span></div>
+        <div class="arrow">→</div>
+        <div class="flow-step"><b>方法を共有</b><span>代替策を記録し、次の職員にも同じ対応をつなぐ。</span></div>
+      </div>
+
+      <div class="callout success">
+        <strong>科学的知見</strong>
+        <p>身体拘束は転倒や傷害を確実に減らすとは限らず、機能低下、入院期間の延長、死亡などの有害転帰と関連します。多面的な教育と個別評価を組み合わせる介入は、長期ケアで拘束を減らす方向に働きます。</p>
+      </div>
+
+      <div class="mastery">
+        <input class="masteryCheck" type="checkbox" id="m4">
+        <label for="m4">問題となる行動の原因を3つ挙げ、拘束以外の対応を提案できる。</label>
+      </div>
+    </section>
+
+    <section class="lesson" id="s5">
+      <div class="section-tag">SECTION 5</div>
+      <h2>事例で判断する</h2>
+      <p>各事例で最も適切な対応を選び、「回答を確認」を押してください。</p>
+
+      <article class="case" data-answer="b">
+        <h3>事例1：排泄介助を拒否する</h3>
+        <p>本人が「今は嫌だ」と繰り返しています。職員は時間がないため、腕を押さえて介助を続けようとしています。</p>
+        <div class="case-options">
+          <label><input type="radio" name="case1" value="a"> A. 清潔保持が目的なので、そのまま続ける。</label>
+          <label><input type="radio" name="case1" value="b"> B. いったん中止し、拒否の理由、痛み、羞恥心、タイミングを確認して方法を変える。</label>
+          <label><input type="radio" name="case1" value="c"> C. 家族に許可を取り、腕を押さえて続ける。</label>
+        </div>
+        <button class="secondary case-check" type="button">回答を確認</button>
+        <div class="case-result" data-explain="腕を押さえて本人の意思に反して介助を続けると、身体的虐待や身体拘束に該当する可能性があります。緊急性がなければ中止し、原因を確認して代替方法を選びます。"></div>
+      </article>
+
+      <article class="case" data-answer="c">
+        <h3>事例2：同僚の暴言を聞く</h3>
+        <p>同僚が利用者に「何回言えば分かるんだ。黙って座っていろ」と怒鳴る場面を目撃しました。</p>
+        <div class="case-options">
+          <label><input type="radio" name="case2" value="a"> A. 同僚の機嫌が悪かっただけなので様子を見る。</label>
+          <label><input type="radio" name="case2" value="b"> B. 本人に謝れば終わりにする。</label>
+          <label><input type="radio" name="case2" value="c"> C. 本人の安全と状態を確認し、事実を記録して、職場内報告と市町村への通報を進める。</label>
+        </div>
+        <button class="secondary case-check" type="button">回答を確認</button>
+        <div class="case-result" data-explain="著しい暴言や威圧による行動制限は、心理的虐待または身体拘束に該当する可能性があります。業務従事者が職員による虐待を疑った場合は、市町村への速やかな通報が義務です。"></div>
+      </article>
+
+      <article class="case" data-answer="a">
+        <h3>事例3：転倒予防の固定テーブル</h3>
+        <p>立ち上がりによる転倒を心配した家族が、車椅子の固定テーブルを外さないよう求めています。</p>
+        <div class="case-options">
+          <label><input type="radio" name="case3" value="a"> A. 家族の希望だけでは実施せず、立ち上がる理由と環境を評価し、代替策を検討する。</label>
+          <label><input type="radio" name="case3" value="b"> B. 家族の同意があるため、そのまま使用する。</label>
+          <label><input type="radio" name="case3" value="c"> C. 転倒予防であれば、記録せずに使用できる。</label>
+        </div>
+        <button class="secondary case-check" type="button">回答を確認</button>
+        <div class="case-result" data-explain="固定テーブルで立ち上がりを妨げる行為は身体拘束です。家族の同意は3要件の代わりになりません。切迫性・非代替性・一時性をすべて確認し、まず代替策を検討します。"></div>
+      </article>
+
+      <div class="mastery">
+        <input class="masteryCheck" type="checkbox" id="m5">
+        <label for="m5">3事例について、判断理由を自分の言葉で説明できる。</label>
+      </div>
+    </section>
+
+    <section class="lesson" id="s6">
+      <div class="section-tag">SECTION 6</div>
+      <h2>理解度確認</h2>
+      <p>6問中5問以上で修了です。回答後に解説が表示されます。</p>
+
+      <form id="quizForm">
+        <div class="quiz-item" data-answer="c">
+          <fieldset>
+            <legend>1. 高齢者虐待の5分類に含まれないものはどれですか。</legend>
+            <div class="quiz-options">
+              <label><input type="radio" name="q1" value="a"> 身体的虐待</label>
+              <label><input type="radio" name="q1" value="b"> 経済的虐待</label>
+              <label><input type="radio" name="q1" value="c"> 医療的虐待</label>
+              <label><input type="radio" name="q1" value="d"> 心理的虐待</label>
+            </div>
+            <div class="quiz-feedback" data-explain="法律上の5分類は、身体的虐待、介護・世話の放棄・放任、心理的虐待、性的虐待、経済的虐待です。"></div>
+          </fieldset>
+        </div>
+
+        <div class="quiz-item" data-answer="a">
+          <fieldset>
+            <legend>2. 職員による虐待を受けたと思われる高齢者を、業務中に発見した場合の対応はどれですか。</legend>
+            <div class="quiz-options">
+              <label><input type="radio" name="q2" value="a"> 虐待の確定を待たず、市町村へ速やかに通報する。</label>
+              <label><input type="radio" name="q2" value="b"> 上司が認めた場合だけ通報する。</label>
+              <label><input type="radio" name="q2" value="c"> 本人が希望しない限り通報できない。</label>
+              <label><input type="radio" name="q2" value="d"> 事業所内で注意して終了する。</label>
+            </div>
+            <div class="quiz-feedback" data-explain="法律は「虐待を受けたと思われる」段階で、養介護施設従事者等に市町村への速やかな通報を義務付けています。"></div>
+          </fieldset>
+        </div>
+
+        <div class="quiz-item" data-answer="d">
+          <fieldset>
+            <legend>3. 緊急やむを得ない身体拘束の3要件として正しい組合せはどれですか。</legend>
+            <div class="quiz-options">
+              <label><input type="radio" name="q3" value="a"> 家族同意・安全性・継続性</label>
+              <label><input type="radio" name="q3" value="b"> 緊急性・利便性・短時間</label>
+              <label><input type="radio" name="q3" value="c"> 医師指示・家族同意・記録</label>
+              <label><input type="radio" name="q3" value="d"> 切迫性・非代替性・一時性</label>
+            </div>
+            <div class="quiz-feedback" data-explain="3要件は切迫性、非代替性、一時性です。すべてを満たし、組織として慎重に確認します。"></div>
+          </fieldset>
+        </div>
+
+        <div class="quiz-item" data-answer="b">
+          <fieldset>
+            <legend>4. 家族が身体拘束を希望した場合の説明として正しいものはどれですか。</legend>
+            <div class="quiz-options">
+              <label><input type="radio" name="q4" value="a"> 家族が書面で同意すれば実施できる。</label>
+              <label><input type="radio" name="q4" value="b"> 家族の希望だけでは実施できず、3要件と代替策の検討が必要である。</label>
+              <label><input type="radio" name="q4" value="c"> 転倒予防であれば常に実施できる。</label>
+              <label><input type="radio" name="q4" value="d"> 30分以内なら記録は不要である。</label>
+            </div>
+            <div class="quiz-feedback" data-explain="家族の同意は3要件の代わりになりません。本人の状態を評価し、拘束以外の方法を先に検討します。"></div>
+          </fieldset>
+        </div>
+
+        <div class="quiz-item" data-answer="c">
+          <fieldset>
+            <legend>5. 身体拘束を緊急やむを得ず行った場合、記録する内容はどれですか。</legend>
+            <div class="quiz-options">
+              <label><input type="radio" name="q5" value="a"> 家族の氏名だけ</label>
+              <label><input type="radio" name="q5" value="b"> 使用した用具の名称だけ</label>
+              <label><input type="radio" name="q5" value="c"> 態様と時間、心身の状況、緊急やむを得ない理由</label>
+              <label><input type="radio" name="q5" value="d"> 職員の感想だけ</label>
+            </div>
+            <div class="quiz-feedback" data-explain="態様と時間、本人の心身の状況、緊急やむを得ない理由を記録します。3要件を確認した具体的内容も残します。"></div>
+          </fieldset>
+        </div>
+
+        <div class="quiz-item" data-answer="a">
+          <fieldset>
+            <legend>6. 問題となる行動が見られたとき、最初に行う対応はどれですか。</legend>
+            <div class="quiz-options">
+              <label><input type="radio" name="q6" value="a"> 差し迫った危険を確認し、本人の不快・要求・環境などの原因を探る。</label>
+              <label><input type="radio" name="q6" value="b"> 事故を防ぐため、直ちに動きを止める。</label>
+              <label><input type="radio" name="q6" value="c"> 家族に身体拘束の同意を求める。</label>
+              <label><input type="radio" name="q6" value="d"> 次の担当者に任せる。</label>
+            </div>
+            <div class="quiz-feedback" data-explain="まず危険を確認し、痛み、排泄、空腹、薬剤、環境、伝え方などの原因を評価します。その上で代替策を共有します。"></div>
+          </fieldset>
+        </div>
+
+        <button class="primary" id="quizSubmit" type="submit">採点する</button>
+        <button class="secondary" id="quizRetry" type="button" style="display:none">再回答する</button>
+      </form>
+
+      <div class="score-panel" id="scorePanel" role="status"></div>
+    </section>
+
+    <section class="lesson" id="sources">
+      <div class="section-tag">REFERENCES</div>
+      <h2>根拠資料</h2>
+      <p>添付資料のうち、虐待の5分類、身体拘束の典型例、3つのロック、拘束の弊害、代替策に関する部分を再構成しました。古い統計値と、訪問介護にそのまま適用できない施設固有の運用要件は本文から除外しました。</p>
+      <ol class="sources">
+        <li><a href="https://laws.e-gov.go.jp/law/417AC1000000124" target="_blank" rel="noopener">高齢者虐待の防止、高齢者の養護者に対する支援等に関する法律</a></li>
+        <li><a href="https://www.mhlw.go.jp/content/12300000/001246385.pdf" target="_blank" rel="noopener">指定居宅サービス等及び指定介護予防サービス等に関する基準について（令和6年度改正資料）</a></li>
+        <li><a href="https://www.mhlw.go.jp/content/12301000/000750726.pdf" target="_blank" rel="noopener">指定居宅サービス等及び指定介護予防サービス等に関する基準について（虐待防止研修の解釈通知）</a></li>
+        <li><a href="https://www.mhlw.go.jp/content/12300000/001690626.pdf" target="_blank" rel="noopener">介護施設・事業所等で働く方々への高齢者虐待防止のための啓発資料</a></li>
+        <li><a href="https://www.mhlw.go.jp/content/12300000/001248430.pdf" target="_blank" rel="noopener">身体拘束ゼロへの手引き</a></li>
+        <li><a href="https://pubmed.ncbi.nlm.nih.gov/36286211/" target="_blank" rel="noopener">Ranabhat P, et al. Effectiveness of Nurses' Training in Identifying, Reporting and Handling Elderly Abuse: A Systematic Literature Review. 2022.</a></li>
+        <li><a href="https://pubmed.ncbi.nlm.nih.gov/32717835/" target="_blank" rel="noopener">Lim J. Factors Affecting Mistreatment of the Elderly in Long-Term Care Facilities. 2020.</a></li>
+        <li><a href="https://pubmed.ncbi.nlm.nih.gov/32003405/" target="_blank" rel="noopener">Chou MY, et al. The Adverse Effects of Physical Restraint Use among Older Adult Patients. 2020.</a></li>
+        <li><a href="https://pubmed.ncbi.nlm.nih.gov/37500094/" target="_blank" rel="noopener">Möhler R, et al. Interventions for preventing and reducing the use of physical restraints in older people receiving long-term care. Cochrane Review. 2023.</a></li>
+      </ol>
+      <p class="small">注：本資料は研修用です。個別事例では、本人の安全を優先し、事業所の指針、市町村の高齢者虐待対応窓口、医療職等と連携してください。</p>
+    </section>
+  </main>
+</div>
+
+<script>
+(() => {
+  const key = "abuse-restraint-training-v1";
+  const state = JSON.parse(localStorage.getItem(key) || "{}");
+  const checks = [...document.querySelectorAll(".masteryCheck")];
+  const progressBar = document.getElementById("progressBar");
+  const progressLabel = document.getElementById("progressLabel");
+  let quizScore = Number(state.quizScore || 0);
+  let quizPassed = Boolean(state.quizPassed);
+
+
+  checks.forEach((c, i) => {
+    c.checked = Boolean(state["m" + i]);
+    c.addEventListener("change", save);
+  });
+
+  function save(){
+    const next = {quizScore, quizPassed};
+    checks.forEach((c,i) => next["m"+i] = c.checked);
+    localStorage.setItem(key, JSON.stringify(next));
+    update();
+  }
+
+  function update(){
+    const completed = checks.filter(c => c.checked).length + (quizPassed ? 1 : 0);
+    const total = checks.length + 1;
+    const pct = Math.round(completed / total * 100);
+    progressBar.style.width = pct + "%";
+    progressLabel.textContent = "進捗 " + pct + "%";
+  }
+
+  document.querySelectorAll(".case-check").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const card = btn.closest(".case");
+      const selected = card.querySelector("input:checked");
+      const box = card.querySelector(".case-result");
+      if (!selected) {
+        box.className = "case-result show ng";
+        box.textContent = "回答を選択してください。";
+        return;
+      }
+      const ok = selected.value === card.dataset.answer;
+      box.className = "case-result show " + (ok ? "ok" : "ng");
+      box.textContent = (ok ? "正解。 " : "再確認。 ") + box.dataset.explain;
+    });
+  });
+
+  const quizForm = document.getElementById("quizForm");
+  const scorePanel = document.getElementById("scorePanel");
+  const retry = document.getElementById("quizRetry");
+  quizForm.addEventListener("submit", e => {
+    e.preventDefault();
+    const items = [...document.querySelectorAll(".quiz-item")];
+    let score = 0;
+    let unanswered = 0;
+    items.forEach(item => {
+      const selected = item.querySelector("input:checked");
+      const feedback = item.querySelector(".quiz-feedback");
+      if (!selected) {
+        unanswered++;
+        feedback.className = "quiz-feedback show ng";
+        feedback.textContent = "未回答です。 " + feedback.dataset.explain;
+      } else {
+        const ok = selected.value === item.dataset.answer;
+        if (ok) score++;
+        feedback.className = "quiz-feedback show " + (ok ? "ok" : "ng");
+        feedback.textContent = (ok ? "正解。 " : "不正解。 ") + feedback.dataset.explain;
+      }
+    });
+    quizScore = score;
+    quizPassed = score >= 5 && unanswered === 0;
+    scorePanel.className = "score-panel show " + (quizPassed ? "pass" : "fail");
+    scorePanel.innerHTML = quizPassed
+      ? `<strong>修了：${score} / 6問</strong><p>主要な法令上の判断と対応を理解しています。各章の理解チェックも確認してください。</p>`
+      : `<strong>再確認：${score} / 6問</strong><p>5問以上の正解が必要です。解説を読み、再回答してください。</p>`;
+    retry.style.display = quizPassed ? "none" : "inline-block";
+    save();
+    scorePanel.scrollIntoView({behavior:"smooth", block:"center"});
+  });
+
+  retry.addEventListener("click", () => {
+    document.querySelectorAll(".quiz-feedback").forEach(x => x.className = "quiz-feedback");
+    scorePanel.className = "score-panel";
+    quizForm.querySelectorAll("input").forEach(x => x.checked = false);
+    quizScore = 0; quizPassed = false; save();
+    document.querySelector(".quiz-item").scrollIntoView({behavior:"smooth"});
+  });
+
+  document.getElementById("resetBtn").addEventListener("click", () => {
+    if (confirm("入力内容、理解チェック、採点結果をすべて消去しますか。")) {
+      localStorage.removeItem(key);
+      location.reload();
+    }
+  });
+
+  const links = [...document.querySelectorAll("nav a")];
+  const sections = links.map(a => document.querySelector(a.getAttribute("href"))).filter(Boolean);
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        links.forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + entry.target.id));
+      }
+    });
+  }, {rootMargin:"-25% 0px -65% 0px"});
+  sections.forEach(s => observer.observe(s));
+
+  update();
+})();
+</script>
+</body>
+</html>
