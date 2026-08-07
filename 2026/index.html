@@ -1,0 +1,270 @@
+```html
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026年度 研修資料一覧</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#008080;
+    font-family:"MS UI Gothic","MS PGothic",Tahoma,sans-serif;
+    padding:30px;
+    color:#000;
+}
+
+.window{
+    max-width:900px;
+    margin:auto;
+    background:#c0c0c0;
+    border-top:2px solid #fff;
+    border-left:2px solid #fff;
+    border-right:2px solid #404040;
+    border-bottom:2px solid #404040;
+    box-shadow:4px 4px #404040;
+}
+
+.title-bar{
+    background:linear-gradient(to right,#000080,#1084d0);
+    color:#fff;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:5px 8px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.window-buttons{
+    display:flex;
+    gap:4px;
+}
+
+.window-buttons span{
+    width:18px;
+    height:18px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#c0c0c0;
+    color:#000;
+    border-top:2px solid #fff;
+    border-left:2px solid #fff;
+    border-right:2px solid #404040;
+    border-bottom:2px solid #404040;
+    font-size:11px;
+}
+
+.window-body{
+    padding:20px;
+}
+
+h1{
+    margin-bottom:10px;
+    font-size:28px;
+}
+
+.subtitle{
+    margin-bottom:20px;
+    line-height:1.8;
+}
+
+.toolbar{
+    display:flex;
+    gap:10px;
+    margin-bottom:20px;
+    flex-wrap:wrap;
+}
+
+.button{
+    text-decoration:none;
+    color:#000;
+    background:#c0c0c0;
+    padding:7px 14px;
+    border-top:2px solid #fff;
+    border-left:2px solid #fff;
+    border-right:2px solid #404040;
+    border-bottom:2px solid #404040;
+}
+
+.button:hover{
+    background:#dcdcdc;
+}
+
+.button:active{
+    border-top:2px solid #404040;
+    border-left:2px solid #404040;
+    border-right:2px solid #fff;
+    border-bottom:2px solid #fff;
+}
+
+.file-list{
+    background:#fff;
+    border:2px inset #c0c0c0;
+}
+
+.file-header{
+    display:grid;
+    grid-template-columns:1fr 140px;
+    background:#000080;
+    color:#fff;
+    font-weight:bold;
+    padding:6px 10px;
+}
+
+.file{
+    display:grid;
+    grid-template-columns:1fr 140px;
+    padding:8px 10px;
+    text-decoration:none;
+    color:#000;
+    border-bottom:1px solid #d0d0d0;
+}
+
+.file:hover{
+    background:#000080;
+    color:#fff;
+}
+
+.filename{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.footer{
+    margin-top:20px;
+    border-top:1px solid #808080;
+    padding-top:15px;
+    font-size:12px;
+    line-height:1.8;
+}
+
+@media(max-width:700px){
+
+body{
+    padding:10px;
+}
+
+.file-header,
+.file{
+    grid-template-columns:1fr;
+    gap:4px;
+}
+
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="window">
+
+    <div class="title-bar">
+
+        <span>📁 2026年度 研修資料</span>
+
+        <div class="window-buttons">
+            <span>─</span>
+            <span>□</span>
+            <span>×</span>
+        </div>
+
+    </div>
+
+    <div class="window-body">
+
+        <h1>2026年度 研修資料一覧</h1>
+
+        <p class="subtitle">
+            閲覧したい研修資料を選択してください。
+        </p>
+
+        <div class="toolbar">
+
+            <a href="../index.html" class="button">
+                ◀ トップページ
+            </a>
+
+        </div>
+
+        <div class="file-list">
+
+            <div class="file-header">
+                <div>ファイル名</div>
+                <div>種類</div>
+            </div>
+
+            <a class="file" href="2026_01.html">
+                <div class="filename">📄 2026_01.html</div>
+                <div>HTML Document</div>
+            </a>
+
+            <a class="file" href="2026_02.html">
+                <div class="filename">📄 2026_02.html</div>
+                <div>HTML Document</div>
+            </a>
+
+            <a class="file" href="2026_03.html">
+                <div class="filename">📄 2026_03.html</div>
+                <div>HTML Document</div>
+            </a>
+
+            <a class="file" href="2026_04.html">
+                <div class="filename">📄 2026_04.html</div>
+                <div>HTML Document</div>
+            </a>
+
+            <a class="file" href="2026_05.html">
+                <div class="filename">📄 2026_05.html</div>
+                <div>HTML Document</div>
+            </a>
+
+            <a class="file" href="2026_06.html">
+                <div class="filename">📄 2026_06.html</div>
+                <div>HTML Document</div>
+            </a>
+
+            <a class="file" href="2026_07.html">
+                <div class="filename">📄 2026_07.html</div>
+                <div>HTML Document</div>
+            </a>
+
+            <a class="file" href="2026_08.html">
+                <div class="filename">📄 2026_08.html</div>
+                <div>HTML Document</div>
+            </a>
+
+            <a class="file" href="2026_09.html">
+                <div class="filename">📄 2026_09.html</div>
+                <div>HTML Document</div>
+            </a>
+
+            <a class="file" href="2026_10.html">
+                <div class="filename">📄 2026_10.html</div>
+                <div>HTML Document</div>
+            </a>
+
+        </div>
+
+        <div class="footer">
+            <strong>運用方法</strong><br>
+            新しい研修資料を追加する場合は、例えば <code>2026_11.html</code> を作成し、上記の一覧に1行追加してください。
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
+```
+
