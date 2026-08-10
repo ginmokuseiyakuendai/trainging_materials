@@ -1,0 +1,164 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#008080;
+    font-family:"MS UI Gothic","MS PGothic",Tahoma,sans-serif;
+    padding:30px;
+    color:#000;
+}
+
+.window{
+    max-width:900px;
+    margin:auto;
+    background:#c0c0c0;
+
+    border-top:2px solid #fff;
+    border-left:2px solid #fff;
+    border-right:2px solid #404040;
+    border-bottom:2px solid #404040;
+
+    box-shadow:4px 4px #404040;
+}
+
+.title-bar{
+    background:linear-gradient(to right,#000080,#1084d0);
+    color:#fff;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    padding:5px 8px;
+
+    font-size:13px;
+    font-weight:bold;
+}
+
+.window-buttons{
+    display:flex;
+    gap:4px;
+}
+
+.window-buttons span{
+    width:18px;
+    height:18px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:#c0c0c0;
+    color:#000;
+
+    border-top:2px solid #fff;
+    border-left:2px solid #fff;
+    border-right:2px solid #404040;
+    border-bottom:2px solid #404040;
+
+    font-size:11px;
+}
+
+.window-body{
+    padding:24px;
+}
+
+h1{
+    font-size:30px;
+    margin-bottom:10px;
+}
+
+.subtitle{
+    margin-bottom:24px;
+    line-height:1.8;
+}
+
+.notice{
+    background:#ffffcc;
+    border:1px solid #808080;
+    padding:10px;
+    margin-bottom:24px;
+}
+
+.notice strong{
+    display:block;
+    margin-bottom:5px;
+}
+
+.year-list{
+    display:grid;
+    gap:14px;
+}
+
+.year-card{
+    background:#dfdfdf;
+    padding:16px;
+
+    border-top:2px solid #fff;
+    border-left:2px solid #fff;
+    border-right:2px solid #808080;
+    border-bottom:2px solid #808080;
+}
+
+.year-title{
+    font-size:20px;
+    font-weight:bold;
+    margin-bottom:6px;
+}
+
+.year-desc{
+    font-size:13px;
+    margin-bottom:14px;
+}
+
+.open-button{
+    display:inline-block;
+    text-decoration:none;
+    color:#000;
+
+    background:#c0c0c0;
+
+    padding:8px 18px;
+
+    border-top:2px solid #fff;
+    border-left:2px solid #fff;
+    border-right:2px solid #404040;
+    border-bottom:2px solid #404040;
+}
+
+.open-button:hover{
+    background:#dcdcdc;
+}
+
+.open-button:active{
+    border-top:2px solid #404040;
+    border-left:2px solid #404040;
+    border-right:2px solid #fff;
+    border-bottom:2px solid #fff;
+}
+
+.footer{
+    margin-top:24px;
+    padding-top:15px;
+    border-top:1px solid #808080;
+
+    font-size:12px;
+    line-height:1.8;
+}
+
+@media(max-width:700px){
+    body{
+        padding:10px;
+    }
+
+    .window-body{
+        padding:16px;
+    }
+
+    h1{
+        font-size:24px;
+    }
+}
