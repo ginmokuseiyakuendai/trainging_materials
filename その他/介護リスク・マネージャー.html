@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>介護リスク・マネージャー</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0; min-height:100vh; background:#008080; color:#000;
+  font-family:"MS UI Gothic",Tahoma,"Yu Gothic",sans-serif; font-size:14px;
+  padding:12px;
+}
+.window{
+  max-width:1100px; margin:auto; background:#c0c0c0;
+  border:2px outset #fff; box-shadow:2px 2px #000;
+}
+.titlebar{
+  background:#000080; color:#fff; padding:4px 6px; font-weight:bold;
+  display:flex; justify-content:space-between; align-items:center;
+}
+.title-buttons{display:flex;gap:2px}
+.title-btn{background:#c0c0c0;color:#000;border:2px outset #fff;width:20px;height:18px;text-align:center;line-height:14px}
+.menu{padding:3px 7px;border-bottom:1px solid #808080;background:#c0c0c0}
+.menu span{margin-right:18px}
+.main{padding:10px}
+.panel{border:2px inset #fff;background:#d4d0c8;padding:8px;margin-bottom:10px}
+h1,h2,h3{font-size:16px;margin:4px 0 8px}
+.status{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:6px}
+.status-box{background:#fff;border:2px inset #fff;padding:6px;min-height:54px}
+.status-box strong{display:block;font-size:18px}
+.case{
+  background:#ffffe1;border:2px inset #fff;padding:10px;
+}
+.case-head{font-weight:bold;background:#000080;color:#fff;padding:5px;margin:-10px -10px 8px}
+.choice{
+  display:block;width:100%;text-align:left;margin:6px 0;padding:8px;
+  background:#c0c0c0;border:2px outset #fff;cursor:pointer;font-family:inherit;
+}
+.choice:hover{background:#dcdcdc}
+.choice:active{border:2px inset #fff}
+.choice:disabled{color:#666;cursor:default}
+.feedback{margin-top:8px;padding:8px;border:2px solid #808080;background:#fff}
+.good{background:#dff0d8!important}
+.bad{background:#ffdede!important}
+.warning{background:#fff4c2!important}
+.small{font-size:12px}
+.progress{height:18px;background:#fff;border:2px inset #fff}
+.progress div{height:100%;background:#000080;width:0%}
+button{
+  font-family:inherit;font-size:14px;background:#c0c0c0;padding:5px 12px;
+  border:2px outset #fff;cursor:pointer;
+}
+button:active{border:2px inset #fff}
+button:disabled{color:#777}
+.footer{text-align:center;font-size:12px;padding:5px}
+details{margin-top:8px}
+summary{cursor:pointer;font-weight:bold}
+@media(max-width:700px){.status{grid-template-columns:1fr 1fr}.status-box:first-child{grid-column:1/-1}}
+</style>
+</head>
+<body>
+<div class="window">
+  <div class="titlebar">
+    <span>介護リスク・マネージャー.exe</span>
+    <div class="title-buttons"><span class="title-btn">_</span><span class="title-btn">□</span><span class="title-btn">×</span></div>
+  </div>
+  <div class="menu"><span>ファイル(F)</span><span>研修(R)</span><span>記録(L)</span><span>ヘルプ(H)</span></div>
+
+  <div class="main">
+    <div class="panel">
+      <h2>介護職員向け「リスク管理・例外処理」訓練</h2>
+      <div class="small">
+        目的：通常手順だけでなく、「いつもと違う」状況を発見し、安全確保→報告・相談→記録→再発防止まで判断する力を鍛えます。
+      </div>
+    </div>
+
+    <div class="panel status">
+      <div class="status-box"><span>現在の訓練</span><strong id="caseNo">1 / 8</strong></div>
+      <div class="status-box"><span>安全スコア</span><strong id="score">0</strong></div>
+      <div class="status-box"><span>判断力</span><strong id="judgement">0</strong></div>
+      <div class="status-box"><span>記録</span><strong id="record">0</strong></div>
+    </div>
+
+    <div class="panel">
+      <div class="progress"><div id="progress"></div></div>
+      <div id="game"></div>
+    </div>
+
+    <div class="panel">
+      <button id="restart" onclick="restart()">最初からやり直す</button>
+      <button onclick="showRules()">ルールを見る</button>
+      <details id="rules">
+        <summary>訓練の考え方</summary>
+        <ul>
+          <li>「手順どおり」より先に、安全上の異常・変化を見つける。</li>
+          <li>独断で処理しきれない場合は、早めに上司・サービス提供責任者等へ報告・相談する。</li>
+          <li>事故・ヒヤリハット・状態変化は、事実と推測を分けて記録する。</li>
+          <li>例外処理では「通常手順を続ける」こと自体がリスクになる場合がある。</li>
+        </ul>
+      </details>
+    </div>
+  </div>
+  <div class="footer">Training Game / Care Risk Management</div>
+</div>
+
+<script>
+const cases = [
+{
+ title:"CASE 01：いつもより反応が鈍い",
+ text:"訪問すると、利用者はいつもより反応が鈍く、会話がかみ合いません。朝食後の服薬は済んだと言っていますが、薬の袋が床に落ちています。",
+ options:[
+  ["予定どおり掃除を始め、最後に様子を確認する",0,"状態変化を後回しにしています。介護サービスの予定より安全確認を優先します。"],
+  ["本人に声をかけて状態を確認し、必要に応じて事業所へ報告・相談する",10,"適切です。普段との違いをリスクとして捉え、状態確認と報告・相談につなげています。"],
+  ["薬の袋が落ちているので、自己判断で追加の服薬を勧める",0,"服薬について独断で判断するのは危険です。まず事実確認と報告・相談が必要です。"]
+ ],
+ lesson:"「普段と違う」は重要なリスク情報。予定された家事・身体介護より安全確認を優先します。"
+},
+{
+ title:"CASE 02：転倒しかけた直後",
+ text:"移動介助中、利用者がふらつき、壁に手をついて転倒を回避しました。本人は「大丈夫」と言っています。",
+ options:[
+  ["本人が大丈夫と言っているので、そのまま予定を続ける",0,"本人の主観だけでリスク評価を終えるのは不十分です。"],
+  ["安全な姿勢を確保し、状態を確認したうえで、事業所へ報告・相談する",10,"適切です。転倒に至らなくても、再発リスクを含めて共有する必要があります。"],
+  ["本人には知らせず、次回訪問時に様子を見る",0,"情報共有を遅らせています。再発防止につながる情報は早期に共有します。"]
+ ],
+ lesson:"転倒しなかったから問題なし、ではありません。「転倒しかけた」という事実自体がヒヤリハット情報です。"
+},
+{
+ title:"CASE 03：予定外の依頼",
+ text:"訪問中、利用者から「今日は家族の部屋も掃除してほしい」と依頼されました。ケアプラン・指示されたサービス内容にはありません。",
+ options:[
+  ["善意なので、時間内なら対応する",0,"契約・ケアプラン等の範囲を超える対応は、後から問題になる可能性があります。"],
+  ["できる範囲を自己判断して対応し、記録には書かない",0,"例外処理を記録しないのは不適切です。"],
+  ["依頼内容を確認し、対応可能か事業所へ相談する",10,"適切です。予定外の依頼は、独断でサービス範囲を拡大せず確認します。"]
+ ],
+ lesson:"「利用者のためだから」と通常のサービス範囲を勝手に変更しないことが重要です。"
+},
+{
+ title:"CASE 04：鍵が開いている",
+ text:"訪問先の玄関が開いています。呼びかけても返事がありません。室内から物音がします。",
+ options:[
+  ["いつも開いている家なので、そのまま入る",0,"慣れによる思い込みは危険です。"],
+  ["声をかけながら安全を確認し、異常が疑われる場合は必要な連絡・報告を行う",10,"適切です。通常と異なる状況では、本人の安全確認を優先します。"],
+  ["何もせず退出して、次の訪問へ行く",0,"異常の可能性を放置しています。状況に応じた安全確認が必要です。"]
+ ],
+ lesson:"「いつもこうだから」は例外処理の敵です。普段と違う情報を拾い、状況に応じて行動します。"
+},
+{
+ title:"CASE 05：本人からの強い拒否",
+ text:"入浴介助の予定ですが、本人が「今日は絶対に嫌だ」と強く拒否しています。表情も普段より険しく、体調不良を訴えています。",
+ options:[
+  ["予定なので、説得して入浴してもらう",0,"本人の意思と体調変化を無視してサービスを強行するのは適切ではありません。"],
+  ["拒否の理由と体調を確認し、無理に実施せず、必要な報告・相談を行う",10,"適切です。拒否の背景にある体調・心理・環境要因を確認します。"],
+  ["入浴を省略して何も報告しない",0,"サービス変更の理由や状態変化を共有していません。"],
+ ],
+ lesson:"拒否は「従わせる問題」ではなく、状態変化や本人の意思を確認するシグナルとして扱います。"
+},
+{
+ title:"CASE 06：記録を書くときの例外",
+ text:"訪問中に利用者が「昨日、職員に強く腕をつかまれた」と話しました。あなたはその場面を見ていません。",
+ options:[
+  ["「職員が腕を強くつかんだ」と断定して記録する",0,"直接確認していない事実を断定してはいけません。"],
+  ["本人の発言として記録し、見た事実・本人の訴え・自分の判断を分けて報告する",10,"適切です。事実と伝聞・評価を分離します。"],
+  ["重要な話ではないので記録しない",0,"安全・虐待防止上、重要な情報を記録から除外しています。"],
+ ],
+ lesson:"記録は「事実」「本人の発言」「観察」「判断」を混ぜないことが重要です。"
+},
+{
+ title:"CASE 07：いつもの担当者と違う",
+ text:"利用者宅で、前回までと違う支援方法を求められました。本人は「前の職員はやってくれた」と言っていますが、あなたはその手順を知りません。",
+ options:[
+  ["前の職員がしていたなら、自分も同じようにやってみる",0,"未経験・未確認の手順を推測で実施するのは危険です。"],
+  ["安全上問題がない範囲で確認し、判断できない内容は事業所へ相談する",10,"適切です。知識・権限・指示の範囲を超える判断は相談します。"],
+  ["利用者の希望なので、とにかく実施する",0,"本人希望だけで安全性や業務範囲を無視してはいけません。"]
+ ],
+ lesson:"「前はできた」は現在の職員が実施できる根拠にはなりません。能力・指示・安全性を確認します。"
+},
+{
+ title:"CASE 08：終業前の小さな異変",
+ text:"最後の訪問で、利用者宅の床に少量の水がこぼれています。利用者は気づいていません。時間は予定終了時刻に近づいています。",
+ options:[
+  ["時間がないので、そのまま退出する",0,"転倒につながる危険を見過ごしています。"],
+  ["本人の安全を確保し、可能な範囲で危険を除去し、必要に応じて共有・記録する",10,"適切です。小さな環境リスクも事故の入口になり得ます。"],
+  ["写真だけ撮って退出する",0,"記録だけで危険を放置するのは不十分です。まず安全確保を考えます。"]
+ ],
+ lesson:"リスク管理は重大事故だけではありません。「小さな危険をその場で減らす」ことが事故予防につながります。"
+}
+];
+
+let current=0, score=0, judgement=0, record=0, answered=false;
+
+function render(){
+ const c=cases[current];
+ document.getElementById("caseNo").textContent=(current+1)+" / "+cases.length;
+ document.getElementById("score").textContent=score;
+ document.getElementById("judgement").textContent=judgement;
+ document.getElementById("record").textContent=record;
+ document.getElementById("progress").style.width=((current)/cases.length*100)+"%";
+ document.getElementById("game").innerHTML=`
+  <div class="case">
+   <div class="case-head">${c.title}</div>
+   <p>${c.text}</p>
+   <p><strong>あなたなら最初にどうしますか？</strong></p>
+   <div id="choices">${c.options.map((o,i)=>`<button class="choice" onclick="answer(${i})">${String.fromCharCode(65+i)}．${o[0]}</button>`).join("")}</div>
+   <div id="feedback"></div>
+  </div>`;
+ answered=false;
+}
+
+function answer(i){
+ if(answered)return;
+ answered=true;
+ const c=cases[current], o=c.options[i];
+ if(o[1]>0){score+=10; judgement+=10; record+=10;}
+ else {score=Math.max(0,score-3);}
+ document.querySelectorAll(".choice").forEach(b=>b.disabled=true);
+ const fb=document.getElementById("feedback");
+ fb.className="feedback "+(o[1]>0?"good":"bad");
+ fb.innerHTML=`<strong>${o[1]>0?"○ 適切な判断":"× 再検討が必要"}</strong><br>${o[2]}<details><summary>このケースのポイント</summary><p>${c.lesson}</p></details>
+ <p><button onclick="next()">${current===cases.length-1?"結果を見る":"次のケースへ"}</button></p>`;
+ updateStatus();
+}
+
+function updateStatus(){
+ document.getElementById("score").textContent=score;
+ document.getElementById("judgement").textContent=judgement;
+ document.getElementById("record").textContent=record;
+}
+
+function next(){
+ if(current<cases.length-1){current++;render();}
+ else finish();
+}
+
+function finish(){
+ document.getElementById("progress").style.width="100%";
+ let rank=score>=70?"A：リスク感知・例外処理が安定しています":
+           score>=50?"B：基本はできています。例外時の相談判断を強化しましょう":
+           "C：通常手順から外れたときの安全確認・報告を重点的に復習しましょう";
+ document.getElementById("game").innerHTML=`
+ <div class="case">
+  <div class="case-head">訓練終了：結果</div>
+  <h2>${score} / ${cases.length*10} 点</h2>
+  <p><strong>${rank}</strong></p>
+  <p>このゲームでは、知識量だけでなく「普段と違うことを発見する」「独断で処理せず相談する」「事実と推測を分けて記録する」という行動を重視しています。</p>
+  <details open><summary>振り返りチェック</summary>
+   <ul>
+    <li>普段との違いを見つけられたか</li>
+    <li>安全確保を優先できたか</li>
+    <li>自分だけで判断してはいけない場面を識別できたか</li>
+    <li>報告・相談すべき情報を選べたか</li>
+    <li>事実と推測を分けて記録できるか</li>
+   </ul>
+  </details>
+  <p><button onclick="restart()">もう一度挑戦する</button></p>
+ </div>`;
+}
+
+function restart(){
+ current=0;score=0;judgement=0;record=0;render();
+}
+function showRules(){document.getElementById("rules").open=true;}
+render();
+</script>
+</body>
+</html>
